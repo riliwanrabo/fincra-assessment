@@ -2,14 +2,16 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
 class UserFactory extends Factory
 {
+    private $domain = 'fincra.test';
     /**
      * Define the model's default state.
      *
@@ -17,11 +19,25 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        static $count = 1;
+
+        $email = "user" . $count++ . "@$this->domain";
+
+        $userExists = User::whereEmail($email)->exists();
+
+        if ($userExists) {
+            $count = User::count() + 1;
+            $email = "user" . $count . "@$this->domain";
+        }
+
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'avatar' => 'https://picsum.photos/1000/650?random=' . Str::random(3),
+            'email' => $email,
+            'first_name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName(),
+            'phone' => $this->faker->phoneNumber(),
+            'address' => $this->faker->address(),
+            'password' => bcrypt('password'),
             'remember_token' => Str::random(10),
         ];
     }

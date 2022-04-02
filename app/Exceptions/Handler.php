@@ -112,7 +112,7 @@ class Handler extends ExceptionHandler
         }
 
         if ($e instanceof AuthenticationException) {
-            return response()->error($e->getMessage());
+            return response()->unauthorized($e->getMessage());
         }
 
         if ($e instanceof RuntimeException) {
