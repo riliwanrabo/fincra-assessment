@@ -14,7 +14,7 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        $data = [
+        return [
             'id' => $this->id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
@@ -22,11 +22,13 @@ class UserResource extends JsonResource
             'phone' => $this->phone,
             'address' => $this->address,
             'avatar' => $this->avatar,
-            'roles' => RolesResource::collection($this->roles)
+            'role' => $this->roles()->first()?->name,
+            'wallet' => WalletResource::make($this->wallet),
+            'statistics' => [
+                'total_transaction_count' => $this->transactions()->count(),
+                'successful_transaction_count' => $this->transactions()->successfulTransactions()->count(),
+                'failed_transaction_count' => $this->transactions()->failedTransactions()->count(),
+            ]
         ];
-
-        ksort($data);
-
-        return $data;
     }
 }

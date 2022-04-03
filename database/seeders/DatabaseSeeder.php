@@ -15,11 +15,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(StatusSeeder::class);
+
         $this->call(PermissionSeeder::class);
 
         $this->call(UserSeeder::class);
 
 
+        Artisan::call('banks:load');
         Artisan::call('passport:install --force');
     }
 }

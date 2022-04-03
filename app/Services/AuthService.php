@@ -4,9 +4,11 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Enums\RoleType;
+use App\Events\UserCreated;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\UserResource;
 use App\Exceptions\UnAuthorizedException;
+use Illuminate\Console\Scheduling\Event;
 
 class AuthService
 {
@@ -47,9 +49,16 @@ class AuthService
             return $user;
         }, 5);
 
+        event(new UserCreated($user));
+
         return [
             'user' => UserResource::make($user),
             'message' => 'Account registered'
         ];
+    }
+
+    public function logout()
+    {
+        request()->user()->token()->revoke();
     }
 }

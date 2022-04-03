@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\Status;
 use App\Traits\HasUuid;
+use App\Traits\StatusTrait;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -12,7 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasUuid, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasUuid, HasRoles, StatusTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -39,4 +41,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function wallet()
+    {
+        return $this->hasOne(wallet::class);
+    }
+
+    public function walletHistory()
+    {
+        return $this->hasManyThrough(WalletHistory::class, Wallet::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

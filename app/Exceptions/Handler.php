@@ -90,6 +90,10 @@ class Handler extends ExceptionHandler
             return response()->unauthorized($e->getMessage());
         }
 
+        if ($e instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
+            return response()->forbidden($e->getMessage());
+        }
+
         if ($e instanceof ModelNotFoundException) {
             $model = str_replace('App\\Models\\', '', $e->getModel());
             return response()->not_found("$model Not found");
