@@ -1,0 +1,39 @@
+{
+	"id": "71ad4bc1-8aee-4fcf-bab2-31a97119a5c4",
+	"name": "fincra-assmt-dev",
+	"values": [
+		{
+			"key": "base-url",
+			"value": "http://localhost:1000/api",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "current-user-id",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "weak-password",
+			"value": "password",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "strong-password",
+			"value": "Password123$$",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "access-token",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2022-04-03T17:15:18.775Z",
+	"_postman_exported_using": "Postman/9.14.14"
+}

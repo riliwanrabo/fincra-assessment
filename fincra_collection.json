@@ -1,0 +1,920 @@
+{
+	"info": {
+		"_postman_id": "6de9e773-d557-4c4f-a240-363ec8777406",
+		"name": "Fincra Assessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "AGENT Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// set token upon login",
+									"if(pm.response.code == 200) {",
+									"    const responseData = pm.response.json();",
+									"    pm.environment.set('access-token', responseData.token)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user42@fincra.test\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/auth/login",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"user1@fincra.test\",\n    \"password\": \"{{weak-password}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-url}}/auth/login",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:1000"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Apr 2022 09:56:43 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Apr 2022 09:56:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.1.2"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date"
+								}
+							],
+							"body": "{\n    \"user\": {\n        \"address\": \"55 Adesina Street 22 904 ChinyereVille\",\n        \"avatar\": \"https://picsum.photos/1000/650?random=u1a\",\n        \"email\": \"user1@fincra.test\",\n        \"first_name\": \"Kubra\",\n        \"id\": \"f80be015-5d3f-4062-9232-e7f19b865fc4\",\n        \"last_name\": \"Ladega\",\n        \"phone\": \"0707 677 2726\"\n    },\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NWY2ODRlNS05NGQyLTQ3ZWItODY0Zi04NGU0MGIxZGU3OGIiLCJqdGkiOiI4OGE1MGIyZjJkYmVjMTJhYjc2ZjJiMWE0NDE4M2U2YTE2OTJkNmJmZjYyMzhlZTQwOGFkZjZmMTA4ZDI5ODA4ZThlODVjMzQxNWQzMjE4NyIsImlhdCI6MTY0ODg5MzQwMy43MzQyNDksIm5iZiI6MTY0ODg5MzQwMy43MzQyNiwiZXhwIjoxNjgwNDI5NDAzLjcyNzkxNywic3ViIjoiZjgwYmUwMTUtNWQzZi00MDYyLTkyMzItZTdmMTliODY1ZmM0Iiwic2NvcGVzIjpbXX0.YrQPYC0tQeq5Q50O6fNnLKb0TLOUL0ACU5q6cK4eQeOdHKPqJgOUZ875N--7GakQvqkcliPLiJ8YcBq631JC6upbiUi8p_3biJN2EBamDgGThoVq8HGfNicIJJaKXtvQ_jsK74gVoP-wOc3jN3sbfMzq_v_tjL6EzS7dELOlRfZ23OgHPqWd2SMeViFw7sGAPSsrCt5yhVcS_PosQpIf_z5iOYaXkr2RfaEjqzlX1Ldpbfle4_V6IsjSM6asZNw9i3RFiGoG-A8B_3CfCIf-Umod5wHV0RMBeyyJurHMzzPKTb5uH-hh2h8bcUrJ-L81styGWBy77rVJB39JO8ERIpx94ndq4g24tAnxHVbsCpTgOyK-nluo9AqE-Ia_M_2ZlSru1X-8Eq3pYLl4LOwNh9nYM2YwwZI_OXXc48KE2dkzkZ6LPG_c_krrdwtFJFaoRJb28R0Is22IUX7fAJ1oA53crxsgP7J2xfrtmM3kt0TTg8xTT5xrCxhvu3By22AtCPoiKCWlE5kauDKFDTooO5pColhK58-x3-5C0iiPA13MG1CJcRO38XTkYjC5JyfGrP0XFpS6vDwiLaE2H3zWhmsDrF_BFK2P9zSx-cpbafK5an3_GFDkCo6f37Q7whyiu-ZYjPV0YG9Ph17zhgiHsg3BxYFfWuUjCbesKYFCc9E\"\n}"
+						}
+					]
+				},
+				{
+					"name": "ADMIN Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// set token upon login",
+									"if(pm.response.code == 200) {",
+									"    const responseData = pm.response.json();",
+									"    pm.environment.set('access-token', responseData.token)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@fincra.test\",\n    \"password\": \"{{weak-password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/auth/login",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"user1@fincra.test\",\n    \"password\": \"{{weak-password}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-url}}/auth/login",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:1000"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Apr 2022 09:56:43 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Apr 2022 09:56:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.1.2"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date"
+								}
+							],
+							"body": "{\n    \"user\": {\n        \"address\": \"55 Adesina Street 22 904 ChinyereVille\",\n        \"avatar\": \"https://picsum.photos/1000/650?random=u1a\",\n        \"email\": \"user1@fincra.test\",\n        \"first_name\": \"Kubra\",\n        \"id\": \"f80be015-5d3f-4062-9232-e7f19b865fc4\",\n        \"last_name\": \"Ladega\",\n        \"phone\": \"0707 677 2726\"\n    },\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NWY2ODRlNS05NGQyLTQ3ZWItODY0Zi04NGU0MGIxZGU3OGIiLCJqdGkiOiI4OGE1MGIyZjJkYmVjMTJhYjc2ZjJiMWE0NDE4M2U2YTE2OTJkNmJmZjYyMzhlZTQwOGFkZjZmMTA4ZDI5ODA4ZThlODVjMzQxNWQzMjE4NyIsImlhdCI6MTY0ODg5MzQwMy43MzQyNDksIm5iZiI6MTY0ODg5MzQwMy43MzQyNiwiZXhwIjoxNjgwNDI5NDAzLjcyNzkxNywic3ViIjoiZjgwYmUwMTUtNWQzZi00MDYyLTkyMzItZTdmMTliODY1ZmM0Iiwic2NvcGVzIjpbXX0.YrQPYC0tQeq5Q50O6fNnLKb0TLOUL0ACU5q6cK4eQeOdHKPqJgOUZ875N--7GakQvqkcliPLiJ8YcBq631JC6upbiUi8p_3biJN2EBamDgGThoVq8HGfNicIJJaKXtvQ_jsK74gVoP-wOc3jN3sbfMzq_v_tjL6EzS7dELOlRfZ23OgHPqWd2SMeViFw7sGAPSsrCt5yhVcS_PosQpIf_z5iOYaXkr2RfaEjqzlX1Ldpbfle4_V6IsjSM6asZNw9i3RFiGoG-A8B_3CfCIf-Umod5wHV0RMBeyyJurHMzzPKTb5uH-hh2h8bcUrJ-L81styGWBy77rVJB39JO8ERIpx94ndq4g24tAnxHVbsCpTgOyK-nluo9AqE-Ia_M_2ZlSru1X-8Eq3pYLl4LOwNh9nYM2YwwZI_OXXc48KE2dkzkZ6LPG_c_krrdwtFJFaoRJb28R0Is22IUX7fAJ1oA53crxsgP7J2xfrtmM3kt0TTg8xTT5xrCxhvu3By22AtCPoiKCWlE5kauDKFDTooO5pColhK58-x3-5C0iiPA13MG1CJcRO38XTkYjC5JyfGrP0XFpS6vDwiLaE2H3zWhmsDrF_BFK2P9zSx-cpbafK5an3_GFDkCo6f37Q7whyiu-ZYjPV0YG9Ph17zhgiHsg3BxYFfWuUjCbesKYFCc9E\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Registration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// set token upon login",
+									"if(pm.response.code == 200) {",
+									"    const responseData = pm.response.json();",
+									"    pm.environment.set('access-token', responseData.token)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"role\": \"admin\",\n    \"first_name\": \"Riliwan\",\n    \"last_name\": \"Balogun\",\n    \"email\": \"rabo.sandbox@gmail.com\",\n    \"phone\": \"08061382122\",\n    \"address\": \"234, Industrial Avenue\",\n    \"avatar\": \"http://placehold.it/300/300\",\n    \"password\": \"{{strong-password}}\",\n    \"password_confirmation\": \"{{strong-password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/auth/register",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Experiments",
+			"item": [
+				{
+					"name": "Banks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/experiments/banks",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"experiments",
+								"banks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Business ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/experiments/banks",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"experiments",
+								"banks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Simulate Successful Payout",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"event\":\"payout.successful\",\n   \"data\": {\n      \"amountCharged\": 200000,\n      \"amountReceived\": 1500,\n      \"fees\": 15,\n      \"sourceCurrency\": \"NGN\",\n      \"destinationCurrency\": \"NGN\",\n      \"recipient\":  {\n        \"name\": \"Hassan Sarz\",\n        \"accountNumber\": \"0124775489\",\n        \"type\": \"individual\",\n        \"email\": \"aa@aa.com\"\n      },\n      \"paymentScheme\": null,\n      \"paymentDestination\": \"bank_account\",\n      \"rate\": 85,\n      \"status\": \"successful\",\n      \"createdAt\": \"2021-03-02T17:00:31.742Z\",\n      \"updatedAt\":\"2021-03-02T17:00:31.742Z\",\n      \"reference\": \"7303c7fb-a487-4abb-9e80-a5be8722639a\"\n    }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "All Users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base-url}}/users",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users (Agents)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/users?type=agent",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "agent"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users (Admins)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/users?type=admin",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/users/91b27526-2368-44b6-94d3-c7aa7980302d",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"users",
+								"91b27526-2368-44b6-94d3-c7aa7980302d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Agent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"Riliwan\",\n    \"last_name\": \"Balogun\",\n    \"phone\": \"08061283233\",\n    \"email\": \"rabo@gmail.com\",\n    \"role\": \"agent\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/users",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Agent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": \"b0f17060-b450-4d58-9509-8a8a09fcd5f4\",\n    \"first_name\": \"Riliwan\",\n    \"last_name\": \"Balogun\",\n    \"phone\": \"08061283233\",\n    \"email\": \"rabo@gmail.com\",\n    \"address\": \"ss\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/users",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fund Agent Wallet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"wallet_id\": \"4872724881\",\n    \"amount\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/wallets/fund",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"wallets",
+								"fund"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Debit Agent Wallet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"wallet_id\": \"e3dbb3ca-e6f2-4b35-b936-c57bf8144e7b\",\n    \"amount\": 100000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/wallets/debit",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"wallets",
+								"debit"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "Me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/profile/me",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"profile",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "My Transactions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/profile/transactions",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"profile",
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transfers",
+			"item": [
+				{
+					"name": "Wallet to Wallet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sender_wallet_id\": 0,\n    \"receiver_wallet_id\": 0,\n    \"amount\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/wallets/transfers",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"wallets",
+								"transfers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resolve Account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"account_number\": \"0109522873\",\n    \"bank_code\": \"058\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/transfers/resolve-account",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"transfers",
+								"resolve-account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transfer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"account_number\": \"0109522873\",\n    \"bank_code\": \"058\",\n    \"amount\": 200\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/transfers",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"transfers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bulk Transfer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"transfers\": [\n        {\n            \"account_number\": \"0109522873\",\n            \"bank_code\": \"058\",\n            \"amount\": 34\n        },\n        {\n            \"account_number\": \"0000000000\",\n            \"bank_code\": \"044\",\n            \"amount\": 14\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/transfers/bulk",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"transfers",
+								"bulk"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "All Transactions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/transactions",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Banks",
+			"item": [
+				{
+					"name": "Banks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/banks",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"banks"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base-url}}/health",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

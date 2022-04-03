@@ -39,7 +39,6 @@ class WebhookController extends Controller
                 $transaction->update([
                     'status' => Status::FAILED->value
                 ]);
-
                 break;
 
             default:
