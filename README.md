@@ -1,4 +1,4 @@
-# RFTF Backend
+# FINCRA ASSESSMENT Backend
 Built with LaravelPHP 9.x and PHP 8.1<br />
 Doc: https://laravel.com/docs/9.x/<br />
 
