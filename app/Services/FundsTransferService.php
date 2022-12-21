@@ -15,7 +15,7 @@ use App\Http\Resources\TransactionResource;
 class FundsTransferService implements FundsTransferContract
 {
     private string $ftService;
-    private $user;
+    public $user;
     public function __construct(
         protected FincraService $fincraService,
         protected TransactionService $transactionService,
@@ -70,7 +70,7 @@ class FundsTransferService implements FundsTransferContract
                 $fundsTransferResponse  = DB::transaction(function () use ($reference, $accountNumber, $bankAccount, $bankCode, $amount) {
                     $transaction = $this->transactionService->logTransaction(
                         $reference,
-                        $this->user,
+                        auth()->user(),
                         $amount,
                         TransactionType::TRANSFER->value,
                         Status::PROCESSING->value,
@@ -78,7 +78,7 @@ class FundsTransferService implements FundsTransferContract
                     );
 
                     $this->walletService->debitWallet(
-                        $this->user->wallet,
+                        auth()->user()->wallet,
                         $amount,
                         $transaction
                     );
