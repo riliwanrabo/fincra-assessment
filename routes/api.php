@@ -88,6 +88,9 @@ Route::controller(ExperimentController::class)
     ->group(function () {
         Route::get('banks', 'fetchBanks');
         Route::get('business-id', 'fetchBusinessId');
+        Route::get('sub-accounts', 'fetchSubAccounts');
+        Route::post('sub-accounts', 'createSubAccount');
+        Route::post('va', 'createVirtualAccount');
     });
 
 Route::fallback(fn () => response()->not_found());

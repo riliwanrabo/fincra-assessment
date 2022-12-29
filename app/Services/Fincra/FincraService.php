@@ -105,6 +105,58 @@ class FincraService
         ];
     }
 
+    # create sub accounts
+    public function createSubAccount()
+    {
+        $faker = \Faker\Factory::create();
+
+        $endpoint = "{$this->baseUrl}/profile/business/{$this->getBusinessId()}/sub-accounts";
+
+        $requestBody =  [
+            'name' => "{$faker->firstName()} {$faker->lastName()}",
+            'email' => "{$faker->email()}",
+            'country' => 'NG',
+            'mobile' => '09099990099'
+        ];
+
+        $request = $this->http()->post($endpoint, $requestBody);
+
+        if ($request->ok() && $request->object()?->success === true) {
+            return $request->object()?->data;
+        } else {
+            throw new RuntimeException($request->object()->error);
+        }
+    }
+
+    public function fetchSubAccounts()
+    {
+        $endpoint = "{$this->baseUrl}/profile/business/{$this->getBusinessId()}/sub-accounts";
+
+        $request = $this->http()->get($endpoint);
+
+        if ($request->ok() && $request->object()?->success === true) {
+            return $request->object()?->data;
+        } else {
+            throw new RuntimeException($request->object()->error);
+        }
+    }
+
+    # VAs
+
+    public function createVirtualAccount(string $subAccountId, array $payload)
+    {
+
+        $endpoint = "{$this->baseUrl}/profile/virtual-accounts/business/{$this->getBusinessId()}/sub-accounts/{$subAccountId}/requests/AUTO";
+
+        $request = $this->http()->post($endpoint, $payload);
+
+        if ($request->ok() && $request->object()?->success === true) {
+            return $request->object()?->data;
+        } else {
+            throw new RuntimeException($request->object()->error);
+        }
+    }
+
     public function http()
     {
         return Http::withHeaders([

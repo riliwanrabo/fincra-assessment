@@ -22,8 +22,6 @@ class WebhookController extends Controller
         switch ($event) {
             case 'payout.successful':
 
-                $this->validateWebhook($request, $request->header('signature'));
-
                 $transaction = Transaction::whereProviderReference($data->reference)->first();
 
                 if (!$transaction) return;
@@ -44,6 +42,23 @@ class WebhookController extends Controller
                 ]);
                 break;
 
+                // checkout
+            case 'charge.successful':
+
+                info("webhook sent for checkout");
+
+                $this->validateWebhook($request, $request->header('signature'));
+
+                $transaction = Transaction::whereProviderReference($data->reference)->first();
+
+                if (!$transaction) return;
+
+                $transaction->update([
+                    'status' => Status::SUCCESSFUL->value
+                ]);
+
+                break;
+
             default:
                 # code...
                 break;
@@ -54,9 +69,7 @@ class WebhookController extends Controller
     {
         $encryptedData = hash_hmac('sha512', json_encode($request->all()), env('FINCRA_WEBHOOK_KEY'));
 
-        info(json_encode($request->all()));
-
-        if ($encryptedData === $signature) {
+        if ($encryptedData == $signature) {
             info("***** successful webhook validation *****");
         } else {
             info("***** failed webhook validation *****");
