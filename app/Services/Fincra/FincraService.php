@@ -143,10 +143,10 @@ class FincraService
 
     # VAs
 
-    public function createVirtualAccount(string $subAccountId, array $payload)
+    public function createVirtualAccount(array $payload)
     {
 
-        $endpoint = "{$this->baseUrl}/profile/virtual-accounts/business/{$this->getBusinessId()}/sub-accounts/{$subAccountId}/requests/AUTO";
+        $endpoint = "{$this->baseUrl}/profile/virtual-accounts/transfer";
 
         $request = $this->http()->post($endpoint, $payload);
 

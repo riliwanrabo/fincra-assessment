@@ -45,7 +45,7 @@ class ExperimentController extends Controller
 
         $payload = $request->except('subAccountId');
 
-        return  $fincraService->createVirtualAccount($subAccountId, $payload);
+        return  $fincraService->createVirtualAccount($payload);
     }
 
     private function requestBody()

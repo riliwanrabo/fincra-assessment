@@ -16,11 +16,17 @@ class WebhookController extends Controller
     public function fincra(Request $request)
     {
         $event = $request->event;
+        $signature = $request->header('signature');
+
+        # log type of event and request data
+        info("event: $event, \ndata: $request");
 
         $data = (object)$request->data;
 
         switch ($event) {
             case 'payout.successful':
+
+                $this->validateWebhook($request->all(), $signature);
 
                 $transaction = Transaction::whereProviderReference($data->reference)->first();
 
@@ -42,20 +48,24 @@ class WebhookController extends Controller
                 ]);
                 break;
 
+            case 'virtualaccount.approved':
+                info("webhook recieved for va creation\n signature: $signature");
+
+                $this->validateWebhook($request->all(), $signature);
+                break;
+
+            case 'collection.successful':
+                info("webhook recieved for collection\n signature: $signature");
+
+                $this->validateWebhook($request->all(), $signature);
+                break;
+
                 // checkout
             case 'charge.successful':
 
-                info("webhook sent for checkout");
+                info("webhook recieved for checkout\n signature: $signature");
 
-                $this->validateWebhook($request, $request->header('signature'));
-
-                $transaction = Transaction::whereProviderReference($data->reference)->first();
-
-                if (!$transaction) return;
-
-                $transaction->update([
-                    'status' => Status::SUCCESSFUL->value
-                ]);
+                $this->validateWebhook($request->all(), $signature);
 
                 break;
 
@@ -65,14 +75,15 @@ class WebhookController extends Controller
         }
     }
 
-    protected function validateWebhook($request, $signature)
+    protected function validateWebhook($data, $signature)
     {
-        $encryptedData = hash_hmac('sha512', json_encode($request->all()), env('FINCRA_WEBHOOK_KEY'));
+        $jsonData = collect($data)->toJson();
+        $key = env('FINCRA_WEBHOOK_KEY');
 
-        if ($encryptedData == $signature) {
-            info("***** successful webhook validation *****");
-        } else {
-            info("***** failed webhook validation *****");
-        }
+        $hash = hash_hmac('sha512', $jsonData, $key);
+
+        info("data before hashing: $jsonData\n\n signature for comparison: $signature\n\n hash: $hash");
+
+        ($hash === $signature) ? info("***** successful webhook validation *****") : info("***** failed webhook validation *****");
     }
 }
